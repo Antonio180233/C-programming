@@ -1,0 +1,307 @@
+// Práctica 4.cpp : Este archivo contiene la función "main". La ejecución del programa comienza y termina ahí.
+// Karen Adriana Velador Moreno 176814
+
+// Visual Studio 2019
+
+
+#include <iostream>
+#include <windows.h> 
+using namespace std;
+#define max_fil 10
+#define max_col 10
+
+
+class Matriz {
+
+	int mat[max_fil][max_col];
+	int filas;
+	int colum;
+public:
+	Matriz(int f, int c) {
+		filas = f;
+		colum = c;
+	}
+
+	
+
+	void llenar();
+	void imprimir();
+	void cambio(int n, int a, int b);
+	bool diagonal();
+	void transpuesta(Matriz &m);
+	bool suma(Matriz m, Matriz& mr);
+	bool resta(Matriz m, Matriz& mr);
+	bool multiplicacion(Matriz m, Matriz& mr);
+	
+
+};
+
+
+
+void Matriz::llenar(){
+
+	cout << "Valores de matriz" << endl;
+	for (int i = 0; i < filas; i++) {
+		for (int j = 0; j < colum; j++) {
+
+			cin >> mat[i][j];
+
+		}
+	}
+
+}
+
+
+void Matriz::imprimir() {
+
+	
+	for (int i = 0; i < filas; i++) {
+		for (int j = 0; j < colum; j++) {
+			
+			  cout << mat[i][j] << " ";
+
+		}
+		cout << endl;
+	}
+}
+
+
+void Matriz::cambio(int n, int a, int b) {
+
+	int v = mat[a][b];
+
+	if (a > filas || b > colum) {
+		cout << "No se puede.\n" << endl;
+	}
+
+	if (a <= filas && b <= colum) {
+
+		cout << "\nPosici" << char(162) << "n: (" << a << ", " << b << ")" << endl;
+		cout << v << " cambio -> " << n << endl << endl;
+		
+		int aux = mat[a][b];
+		mat[a][b] = n;
+		n = aux;
+	}
+	
+
+}
+
+bool Matriz::diagonal() {
+	
+	
+		if (filas == colum) {
+			for (int i = 0; i < filas; i++){
+				for (int j = 0; j < colum; j++){
+					
+					if (i == j) {
+						cout << mat[i][j] << " ";
+					}
+					
+				}
+			}
+			
+			cout << "\nMatriz SI cuadrada\n" << endl;
+			return true;
+		}
+		cout << "\nMatriz NO cuadrada\n" << endl;
+		return false;
+	
+}
+
+void Matriz::transpuesta(Matriz& mr) {
+	for (int i = 0; i < mr.filas; i++) {
+		for (int j = 0; j < mr.colum; j++) {
+
+			mr.mat[i][j] = mat[j][i];
+		}
+	}
+	cout << endl;
+}
+
+
+
+bool Matriz::suma(Matriz m, Matriz& mr)
+{
+	//mr.mat[max_fil] [max_col] = 0;
+	if (filas == m.filas && colum == m.colum) {
+		for (int i = 0; i < filas; i++) {
+			for (int j = 0; j < colum; j++) {
+				mr.mat[i][j] = mat[i][j] + m.mat[i][j];
+			}
+		}
+		return true;
+	}
+	else {
+
+		cout << "No se puede.\n";
+		return false;
+
+	}
+}
+
+bool Matriz::resta(Matriz m, Matriz& mr)
+{
+	//mr.mat[max_fil][max_col] = 0;
+	if (filas == m.filas && colum == m.colum) {
+		for (int i = 0; i < filas; i++) {
+			for (int j = 0; j < colum; j++) {
+				mr.mat[i][j] = mat[i][j] - m.mat[i][j];
+			}
+		}
+		return true;
+	}
+	cout << "No se puede.\n";
+	return false;
+}
+
+
+bool Matriz::multiplicacion(Matriz m, Matriz& mr){
+	if (colum != m.filas) {
+		cout << "No se puede.\n";
+		return false;
+	}
+
+	mr.filas = filas;
+	mr.colum = m.colum;
+	//mr.mat[max_fil][max_col] = 0;
+	for (int i = 0; i < filas; i++){
+		for (int j = 0; j < m.colum; j++){
+			for (int k = 0; k < colum; k++){
+				mr.mat[i][j] = mr.mat[i][j] + (mat[i][k] * m.mat[k][j]);
+
+			}
+		}
+	}
+	return true;
+}
+
+
+
+
+
+
+
+int main() {
+	{
+
+		int f1, c1, nc, pos, f2, c2, * mat;
+
+		Matriz a(3, 3);
+		Matriz b(3, 4);
+		Matriz c(4, 3);
+		Matriz d(3, 4);
+		cout << "Matriz A\n";
+		a.llenar();
+		
+		system("cls");
+		cout << "Matriz B\n";
+		b.llenar();
+		system("cls");
+		cout << "Matriz C\n";
+		c.llenar();
+		system("cls");
+		cout << "Matriz A\n";
+		a.imprimir();
+		cout << "\nMatriz B\n";
+		b.imprimir();
+
+		cout << "\n\nC = A + B\n";
+		a.suma(b, c);
+
+		cout << endl;
+		system("pause");
+		system("cls");
+
+		cout << "Matriz A\n";
+		a.imprimir();
+		cout << "\nMatriz C\n";
+		c.imprimir();
+		cout << "\n\nB = A x C\n";
+		a.multiplicacion(c, b);
+
+		cout << endl;
+		system("pause");
+		system("cls");
+
+		cout << "Matriz A\n";
+		a.imprimir();
+
+		cout << "\n\nCambio.\n";
+		a.cambio(3, 4, 3);
+		
+		cout << endl;
+		system("pause");
+		system("cls");
+
+		cout << "Matriz B\n";
+		b.imprimir();
+
+		cout << "\n\nCambio.\n";
+		b.cambio(3, 2, 3);
+		cout << "\n\nNueva matriz\n";
+		b.imprimir();
+
+		cout << endl;
+		system("pause");
+		system("cls");
+
+		cout << "Diagonal A" << endl;
+		cout << "{ ";
+		a.diagonal();
+		cout << "}";
+
+		cout << endl;
+		system("pause");
+		system("cls");
+
+		cout << "Diagonal B" << endl;
+		b.diagonal();
+
+
+		cout << endl;
+		system("pause");
+		system("cls");
+
+		cout << "Transpuesta de C";
+		c.transpuesta(d);
+		d.imprimir();
+
+		cout << endl;
+		system("pause");
+		system("cls");
+
+		cout << "Matriz B\n";
+		b.imprimir();
+		cout << "\nMatriz C\n";
+		c.imprimir();
+		cout << "\n\nB = B x C\n";
+		b.multiplicacion(c, b);
+		b.imprimir();
+
+		cout << endl;
+		system("pause");
+		system("cls");
+
+		cout << "Matriz A\n";
+		a.imprimir();
+		cout << "\nMatriz B\n";
+		b.imprimir();
+		cout << "\n\nD = A + B\n";
+		a.suma(b, d);
+		d.imprimir();
+
+		cout << endl;
+		system("pause");
+		system("cls");
+
+		cout << "Matriz B\n";
+		b.imprimir();
+		cout << "\nMatriz D\n";
+		d.imprimir();
+		cout << "\n\nA = B + D\n";
+		b.suma(d, a);
+		a.imprimir();
+
+	}
+}

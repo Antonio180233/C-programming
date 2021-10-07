@@ -1,0 +1,125 @@
+// Práctica 2.cpp : Este archivo contiene la función "main". La ejecución del programa comienza y termina ahí.
+// Karen Adriana Velador Moreno 176814
+
+// Visual Studio 2019
+
+#include <iostream>
+#include <stdlib.h>
+
+using namespace std;
+
+void llenar(int a[], int n);
+void burbuja(int a[], int n);
+void insercion(int a[], int n);
+void imprimir(int a[], int n);
+
+
+int main()
+{
+
+	int* arre, op, num;
+
+	cout << "No. de valores: ";
+	cin >> num;
+	arre = new int[num];
+	system("cls");
+
+	do {
+		system("cls");
+		cout << "1. Ordenamiento de burbuja" << endl;
+		cout << "2. Ordenamiento de inserci" << char(162) << "n" << endl;
+		cout << "3. Salir" << endl;
+		cout << "Opci" << char(162) << "n: ";
+		cin >> op;
+		system("cls");
+		switch (op) {
+		case 1:
+			cout << "Ordenamiento de burbuja" << endl;
+			burbuja(arre, num);
+			cout << endl;
+			system("pause");
+			break;
+		case 2:
+			cout << "Ordenamiento de inserci" << char(162) << "n" << endl;
+			insercion(arre, num);
+			cout << endl;
+			system("pause");
+			break;
+		case 3:
+			cout << "Ha salido del programa" << endl;
+			system("pause");
+			exit(0);
+			break;
+		default:
+			cout << "Opci" << char(162) << "n no valida" << endl;
+			system("pause");
+			break;
+		}
+
+	} while (op != 3);
+
+}
+
+
+void llenar(int a[], int n) {
+
+	for (int m = 1; m <= n; m++) {
+
+		a[m] = rand() % 100 + 1;
+	}
+}
+
+
+void burbuja(int a[], int n) {
+
+	llenar(a, n);
+	cout << endl;
+
+	for (int i = 0; i <= n; i++) {
+		for (int j = 0; j < n - i; j++) {
+			if (a[j] > a[j + 1]) {
+
+				int aux = a[j];
+				a[j] = a[j + 1];
+				a[j + 1] = aux;
+			}
+		}
+	}
+
+	imprimir(a, n);
+}
+
+
+
+void insercion(int a[], int n) {
+
+	llenar(a, n);
+	cout << endl;
+
+	int x;
+
+	for (int i = 1; i <= n; i++) {
+
+		x = a[i];
+		int j = i - 1;
+
+		while (j > -1 && x < a[j]) {
+
+			a[j + 1] = a[j];
+			j--;
+		}
+
+		a[j + 1] = x;
+	}
+
+	imprimir(a, n);
+}
+
+
+void imprimir(int a[], int n) {
+
+	for (int k = 1; k <= n; k++) {
+
+		cout << "\t" << a[k] << endl;
+	}
+}

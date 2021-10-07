@@ -1,0 +1,359 @@
+// Práctica 3.cpp : Este archivo contiene la función "main". La ejecución del programa comienza y termina ahí.
+// Karen Adriana Velador Moreno 176814
+
+// Visual Studio 2019
+
+#include <iostream>
+using namespace std;
+
+#define n 8
+
+class Conjunto {
+public:
+	int elem[n];
+	int card;
+
+	bool agregar(int e);
+	bool miembro(int e);
+	bool borrar(int e);
+	void imprimir();
+	bool comparar(Conjunto c1);
+	bool unir(Conjunto c2, Conjunto& c3);
+	bool intersectar(Conjunto c2, Conjunto& c3);
+
+	Conjunto() {
+		card = 0;
+	}
+};
+
+
+bool Conjunto::agregar(int e) {
+	if (card == n) {
+		cout << "\nNo se puede.";
+		return false;
+	}
+
+	if (miembro(e)) {
+		cout << "\nNo se puede.";
+		return false;
+	}
+
+	elem[card] = e;
+	card++;
+	return true;
+}
+
+
+
+bool Conjunto::miembro(int e)
+{
+	for (int i = 0; i < card; i++)
+	{
+		if (e == elem[i]) {
+			return true;
+		}
+	}
+	return false;
+}
+
+
+bool Conjunto::borrar(int e)
+{
+	for (int i = 0; i < card; i++)
+	{
+		if (elem[i] == e) {
+			elem[i] = elem[card - 1];
+			card--;
+			return true;
+		}
+	}
+	return false;
+}
+
+
+
+void Conjunto::imprimir()
+{
+	int i = 0;
+	for (i = 0; i < card; i++) {
+		cout << elem[i] << " ";
+	}
+	cout << "}" << endl;
+}
+
+
+bool Conjunto::comparar(Conjunto c1)
+{
+	if (card != c1.card) {
+		return false;
+	}
+	for (int i = 0; i < card; i++) {
+		if (c1.miembro(elem[i]) == false)
+			return false;
+	}
+	return true;
+}
+
+
+
+bool Conjunto::unir(Conjunto c2, Conjunto& c3)
+{
+	int i, cardc = 0;
+	Conjunto c;
+
+	c3.card = 0;
+	c3.elem[n] = 0;
+
+
+	
+	for (i = 0; i < card; i++) {
+		
+			c3.agregar(elem[i]);
+			cardc++;
+		
+	}
+
+
+	for (i = 0; i < c2.card; i++) {
+		if (c3.miembro(c2.elem[i]) == false) {
+			c3.agregar(c2.elem[i]);
+			cardc++;
+		}
+	}
+
+
+	if (cardc > n) {
+
+		
+		return false;
+	}
+	if (cardc < n) {
+		
+		return true;
+	}
+	
+
+
+}
+
+bool Conjunto::intersectar(Conjunto c2, Conjunto& c3) {
+
+	int i, cardc = 0;
+
+	c3.card = 0;
+	c3.elem[n] = 0;
+
+	for (i = 0; i < card; i++) {
+		if (miembro(c2.elem[i]) == true) {
+			c3.agregar(elem[i]);
+			cardc++;
+		}
+	}
+
+	
+
+	if (cardc > n) {
+
+		
+		return false;
+	}
+	if (cardc < n) {
+
+		return true;
+	}
+
+
+}
+
+
+int main()
+{
+	Conjunto a, b, c;
+
+	a.agregar(3);
+	a.agregar(5);
+	a.agregar(7);
+	a.agregar(9);
+	a.agregar(6);
+	cout << "\nA = { ";
+	a.imprimir();
+
+	b.agregar(5);
+	b.agregar(3);
+	b.agregar(9);
+	b.agregar(6);
+	b.agregar(7);
+	cout << "B = { ";
+	b.imprimir();
+
+
+	a.unir(b, c);
+	cout << "\nC = A union B = { ";
+	c.imprimir();
+
+	a.intersectar(b, c);
+	cout << "\nC = A interseccion B = { ";
+	c.imprimir();
+
+	if (a.comparar(b) == true)
+	{
+		cout << "\nA y B son iguales\n" << endl;
+	}
+	else {
+		cout << "\nA y B no son iguales\n" << endl;
+	}
+
+	///////////////////////////////////////////////////////////////////
+	system("pause");
+	system("cls");
+
+	cout << "\nAgregar 4 a A";
+	a.agregar(4);
+	cout << "\nA = { ";
+	a.imprimir();
+
+	cout << "\nAgregar 9 a A";
+	a.agregar(9);
+	cout << "\nA = { ";
+	a.imprimir();
+
+	cout << "\nAgregar 10 y 15 a A";
+	a.agregar(10);
+	a.agregar(15);
+	cout << "\nA = { ";
+	a.imprimir();
+
+	cout << "\nAgregar 14 a A";
+	a.agregar(14);
+	cout << "\nA = { ";
+	a.imprimir();
+
+	/////////////////////////////////////////////////////////////////////////
+	cout << endl;
+	system("pause");
+	system("cls");
+
+	cout << "\nA = { ";
+	a.imprimir();
+	cout << "B = { ";
+	b.imprimir();
+
+	a.intersectar(b, c);
+	cout << "\nC = A interseccion B = { ";
+	c.imprimir();
+
+	a.unir(b, c);
+	cout << "\nC = A union B = { ";
+	c.imprimir();
+
+	if (a.comparar(b) == true)
+	{
+		cout << "\nA y B son iguales\n" << endl;
+	}
+	else {
+		cout << "\nA y B no son iguales\n" << endl;
+	}
+
+	///////////////////////////////////////////////////////////////////
+	system("pause");
+	system("cls");
+
+	b.borrar(5);
+	b.borrar(3);
+	b.borrar(9);
+	b.borrar(6);
+	b.borrar(7);
+
+	cout << "\nA = { ";
+	a.imprimir();
+	cout << "B = { ";
+	b.imprimir();
+
+	b.intersectar(a, c);
+	cout << "\nC = A interseccion B = { ";
+	c.imprimir();
+
+	////////////////////////////////////////////////////////
+	cout << endl;
+	system("pause");
+	system("cls");
+
+	b.agregar(14);
+	b.agregar(15);
+	b.agregar(21);
+	a.borrar(10);
+	a.borrar(4);
+	a.borrar(15);
+
+	cout << "\nA = { ";
+	a.imprimir();
+	cout << "B = { ";
+	b.imprimir();
+
+	a.unir(b, c);
+	cout << "\nC = A union B = { ";
+	c.imprimir();
+
+	////////////////////////////////////////////////////////
+	cout << endl;
+	system("pause");
+	system("cls");
+
+	b.agregar(17);
+
+	cout << "\nA = { ";
+	a.imprimir();
+	cout << "B = { ";
+	b.imprimir();
+
+	a.unir(b, c);
+	cout << "\nC = A union B = { ";
+	c.imprimir();
+	
+
+	////////////////////////////////////////////////////////
+	cout << endl << endl;
+	system("pause");
+	system("cls");
+
+	a.agregar(4);
+	a.borrar(15);
+
+	cout << "\nA = { ";
+	a.imprimir();
+	cout << "\nB = { ";
+	b.imprimir();
+	cout << "\nC = { ";
+	c.imprimir();
+
+	////////////////////////////////////////////////////////
+	cout << endl;
+	system("pause");
+	system("cls");
+
+	a.borrar(3); a.borrar(5); a.borrar(7); a.borrar(9); a.borrar(6);
+	a.borrar(4); b.borrar(14); b.borrar(15); b.borrar(21); b.borrar(17);
+
+	cout << "\nA = { ";
+	a.imprimir();
+	cout << "\nB = { ";
+	b.imprimir();
+
+	if (a.comparar(b) == true)
+	{
+		cout << "\nA y B son iguales\n" << endl;
+	}
+	else {
+		cout << "\nA y B no son iguales\n" << endl;
+	}
+
+	a.unir(b, c);
+	cout << "C = A union B = { ";
+	c.imprimir();
+
+	b.intersectar(a, c);
+	cout << "\nC = A interseccion B = { ";
+	c.imprimir();
+
+
+}

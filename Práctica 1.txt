@@ -1,0 +1,91 @@
+// Práctica 1.cpp : This file contains the 'main' function. Program execution begins and ends there.
+// Karen Adriana Velador Moreno 176814
+
+// Visual Studio 2019
+
+#include <iostream>
+using namespace std;
+
+void solicitar(float& x, float& y);
+void conversion(float& x, float& y, float& r, float& a);
+void resultado(float& x, float& y);
+
+
+int main()
+{
+
+	float r1 = 0, r2 = 0, p1 = 0, p2 = 0;
+	
+	conversion(r1, r2, p1, p2);
+	resultado(p1, p2);
+
+	system("pause");
+
+}
+
+void solicitar(float& x, float& y) {
+
+	int i = 2;
+
+	cout << "Coordenadas rectangulares a polares.\n\n";
+
+	cout << "1. Ingrese las coordenadas rectangulares (x, y)\n\n";
+	cout << "X = "; cin >> x;
+	cout << "Y = "; cin >> y;
+	
+	if (x < 0 || x > 1000 || y < 0 || y > 1000) {
+
+
+		do {
+
+
+			if (i == 4) {
+				system("cls");
+				cout << "Has hecho 3 intentos con coordenadas incorrectas\npor lo tanto ha terminado el programa.\n\n";
+				system("pause");
+				exit(0);
+			}
+
+			system("cls");
+			cout << "Error. Intente de nuevo. \n\n";
+			cout << i << ". ";
+			cout << "Ingrese las coordenadas rectangulares (x, y)\n\n";
+			cout << "X = "; cin >> x;
+			cout << "Y = "; cin >> y;
+
+			i++;
+
+		} while (x < 0 || x > 1000 || y < 0 || y > 1000);
+
+	}
+
+}
+
+
+
+void conversion(float& x, float& y, float& r, float& a) {
+
+	float oper, t, rad;
+
+	solicitar(x, y);
+
+	oper = (x * x) + (y * y);
+	r = sqrt(oper);
+
+	t = y / x;
+	rad = atan(t);
+	a = rad * (180 / 3.1416);
+
+	system("cls");
+	cout << "Coordenadas rectangulares\n";
+	cout << "(" << x << ", " << y << ")\n\n";
+
+}
+
+
+void resultado(float& r, float& a){
+
+	cout << "Coordenadas polares\n";
+	cout << "(" << r << ", " << a << char(248) << ")\n\n";
+
+}
